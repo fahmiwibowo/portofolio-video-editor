@@ -44,7 +44,6 @@
     border-radius:4px;
   }
 
-  /* ---------- progress bar (render bar) ---------- */
   #progress{
     position:fixed; top:0; left:0; height:3px; width:0%;
     background:linear-gradient(90deg, var(--rec), var(--amber));
@@ -83,7 +82,6 @@
 
   h1,h2,h3{ font-family:var(--mono); margin:0; letter-spacing:-0.01em; }
 
-  /* ---------- top chapter nav ---------- */
   header.chapters{
     position:sticky; top:0; z-index:50;
     background:rgba(15,17,19,0.85);
@@ -119,6 +117,12 @@
     padding-top:90px;
     padding-bottom:80px;
     border-bottom:1px solid var(--border);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:48px;
+    align-items:start;
   }
   .hero .kicker{
     font-family:var(--mono);
@@ -169,6 +173,44 @@
   .btn-ghost{ color:var(--text); }
   .btn-ghost:hover{ border-color:var(--text-dim); }
 
+  /* photo box */
+  .hero-photo{
+    position:relative;
+    aspect-ratio:3/4;
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid var(--border);
+    background:var(--panel);
+  }
+  .hero-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .hero-photo .frame-tag{
+    position:absolute;
+    top:14px; left:14px;
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--text);
+    background:rgba(15,17,19,0.55);
+    backdrop-filter:blur(4px);
+    padding:5px 10px;
+    border-radius:99px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .hero-photo .frame-tag .dot{
+    width:6px; height:6px; background:var(--rec); border-radius:50%;
+  }
+  .hero-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    border:1px solid rgba(232,176,35,0.25);
+    border-radius:var(--radius);
+    pointer-events:none;
+  }
+
   /* scrubber */
   .scrubber{
     background:var(--panel);
@@ -209,7 +251,6 @@
     font-family:var(--mono); font-size:0.68rem; color:var(--text-dim);
   }
 
-  /* stats chips */
   .stats{
     display:flex; gap:28px; flex-wrap:wrap; margin-top:44px;
   }
@@ -219,12 +260,10 @@
   .stat .n{ font-size:1.6rem; font-weight:700; color:var(--teal); }
   .stat .l{ font-size:0.75rem; color:var(--text-dim); }
 
-  /* ---------- generic section heading ---------- */
   .sec-head{ margin-bottom:44px; max-width:640px; }
   .sec-head h2{ font-size:clamp(1.6rem,3.4vw,2.2rem); font-weight:700; margin-bottom:6px; }
   .sec-head p{ color:var(--text-dim); }
 
-  /* ---------- about ---------- */
   .about-grid{
     display:grid; grid-template-columns:1.4fr 1fr; gap:48px;
     align-items:start;
@@ -255,7 +294,6 @@
   .about-card li:last-child{ border-bottom:none; }
   .about-card li span:last-child{ color:var(--amber); font-family:var(--mono); }
 
-  /* ---------- projects ---------- */
   .grid-short{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
@@ -341,7 +379,6 @@
   .card-long p{ color:var(--text-dim); font-size:0.9rem; margin:0 0 10px; }
   .card-long .meta{ font-family:var(--mono); font-size:0.72rem; color:var(--amber); }
 
-  /* ---------- skills as mini timeline ---------- */
   .skills-list{ display:flex; flex-direction:column; gap:18px; }
   .skill-row{ display:grid; grid-template-columns:160px 1fr 60px; align-items:center; gap:16px; }
   .skill-row .name{ font-size:0.92rem; font-weight:600; }
@@ -352,7 +389,6 @@
   .skill-fill{ height:100%; background:linear-gradient(90deg, var(--teal), var(--amber)); border-radius:99px; }
   .skill-row .pct{ font-family:var(--mono); font-size:0.75rem; color:var(--text-dim); text-align:right; }
 
-  /* ---------- contact ---------- */
   .contact-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -386,7 +422,6 @@
     color:var(--text-dim);
   }
 
-  /* ---------- floating contact button ---------- */
   .floating-cta{
     position:fixed;
     bottom:22px; right:22px;
@@ -407,6 +442,8 @@
   .floating-cta svg{ width:16px; height:16px; fill:#0F1113; }
 
   @media (max-width:760px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-photo{ aspect-ratio:4/3; order:-1; margin-bottom:32px; }
     .about-grid{ grid-template-columns:1fr; }
     .contact-grid{ grid-template-columns:1fr; }
     .card-long{ grid-template-columns:1fr; }
@@ -438,32 +475,41 @@
 
 <section class="hero" id="hero">
   <div class="wrap">
-    <div class="kicker"><span class="dot"></span>SEKARANG MEREKAM · VIDEO EDITOR</div>
-    <h1>Halo, saya <span class="accent">Fahmi Putra Wibowo</span><br>saya mengedit cerita, bukan cuma klip.</h1>
-    <p class="lead">Video editor dengan pengalaman menggarap konten short-form maupun long-form — dari naskah mentah, footage berantakan, sampai jadi video yang enak ditonton dari detik pertama sampai akhir.</p>
-    <div class="cta-row">
-      <a href="#short" class="btn btn-primary">▶ Lihat Proyek</a>
-      <a href="#contact" class="btn btn-ghost">Hubungi Saya →</a>
-    </div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="kicker"><span class="dot"></span>SEKARANG MEREKAM · VIDEO EDITOR</div>
+        <h1>Halo, saya <span class="accent">Fahmi Putra Wibowo</span><br>saya mengedit cerita, bukan cuma klip.</h1>
+        <p class="lead">Video editor dengan pengalaman menggarap konten short-form maupun long-form — dari naskah mentah, footage berantakan, sampai jadi video yang enak ditonton dari detik pertama sampai akhir.</p>
+        <div class="cta-row">
+          <a href="#short" class="btn btn-primary">▶ Lihat Proyek</a>
+          <a href="#contact" class="btn btn-ghost">Hubungi Saya →</a>
+        </div>
 
-    <div class="scrubber">
-      <div class="scrubber-top">
-        <span>portfolio_final_v3.mp4</span>
-        <span id="scrubTime">00:00 / 06:45</span>
-      </div>
-      <div class="scrubber-track">
-        <div class="scrubber-fill" id="scrubFill"></div>
-        <div class="scrubber-head" id="scrubHead"></div>
-      </div>
-      <div class="scrubber-marks">
-        <span>Intro</span><span>Tentang</span><span>Short</span><span>Long</span><span>Tools</span><span>Kontak</span>
-      </div>
-    </div>
+        <div class="scrubber">
+          <div class="scrubber-top">
+            <span>portfolio_final_v3.mp4</span>
+            <span id="scrubTime">00:00 / 06:45</span>
+          </div>
+          <div class="scrubber-track">
+            <div class="scrubber-fill" id="scrubFill"></div>
+            <div class="scrubber-head" id="scrubHead"></div>
+          </div>
+          <div class="scrubber-marks">
+            <span>Intro</span><span>Tentang</span><span>Short</span><span>Long</span><span>Tools</span><span>Kontak</span>
+          </div>
+        </div>
 
-    <div class="stats">
-      <div class="stat"><div class="n">20+</div><div class="l">PROYEK SELESAI</div></div>
-      <div class="stat"><div class="n">1+ TAHUN</div><div class="l">PENGALAMAN EDITING</div></div>
-      <div class="stat"><div class="n">5 JUTA+</div><div class="l">TOTAL VIEWS</div></div>
+        <div class="stats">
+          <div class="stat"><div class="n">20+</div><div class="l">PROYEK SELESAI</div></div>
+          <div class="stat"><div class="n">1+ TAHUN</div><div class="l">PENGALAMAN EDITING</div></div>
+          <div class="stat"><div class="n">5 JUTA+</div><div class="l">TOTAL VIEWS</div></div>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <div class="frame-tag"><span class="dot"></span>REC</div>
+        <img src="proyek 16.png" alt="Foto Fahmi Putra Wibowo">
+      </div>
     </div>
   </div>
 </section>
@@ -510,33 +556,33 @@
       <div class="grid-short">
         <a href="https://www.tiktok.com/@mahagun__/video/7562157303500180754" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 1.png'); background-size:cover; background-position:center;"></div>
-          <div class="card-body"> 
-            <h4>Jurusan Yang Outfitnya Kurang Oke</h4>
+          <div class="card-body">
+             <h4>Jurusan Yang Outfitnya Kurang Oke</h4>
             <div class="meta">LifeStyle · 0:45</div>
           </div>
         </a>
-        <a href="https://www.tiktok.com/@mahagun__/video/7642684624954576149" class="card-short">
+        <a href="https://www.tiktok.com/@mahagun__/video/7642684624954576149" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 2.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>Jurusan Cowo Green Flag</h4>
             <div class="meta">KOMEDI · 0:30</div>
           </div>
         </a>
-        <a href="https://www.tiktok.com/@mahagun__/video/7575145304530504968" class="card-short">
+        <a href="https://www.tiktok.com/@mahagun__/video/7575145304530504968" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 3.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>Rekomendasi Tempat Nge Date</h4>
             <div class="meta">LifeStyle · 1:00</div>
           </div>
         </a>
-        <a href="https://www.tiktok.com/@mahagun__/video/7558818153170570507" class="card-short">
+        <a href="https://www.tiktok.com/@mahagun__/video/7558818153170570507" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 4.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>Alasan Masuk Gunadarma</h4>
             <div class="meta">PROMOSI · 0:40</div>
           </div>
         </a>
-        <a href="https://www.tiktok.com/@mahagun__/video/7564038606679969032" class="card-short">
+        <a href="https://www.tiktok.com/@mahagun__/video/7564038606679969032" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 5.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>Gedung Kampus Favorit</h4>
@@ -552,21 +598,21 @@
     <div class="client-group">
       <h3 class="client-name">Pondok Pesantren Mahasiswa Depok (2 tahun)</h3>
       <div class="grid-short">
-        <a href="https://www.instagram.com/reel/DLceFoZtol3/" class="card-short">
+        <a href="https://www.instagram.com/reel/DLceFoZtol3/" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 6.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>Teaser Pendaftaran Santri Baru</h4>
             <div class="meta">STORYTELLING · 0:40</div>
           </div>
         </a>
-        <a href="https://www.instagram.com/reel/DNjsTTWSWrk/" class="card-short">
+        <a href="https://www.instagram.com/reel/DNjsTTWSWrk/" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 7.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>After Movie Pendaftaran Santri Baru</h4>
             <div class="meta">STORYTELLING · 0:40</div>
           </div>
         </a>
-        <a href="https://www.instagram.com/reel/DKMvg8NyQk1/" class="card-short">
+        <a href="https://www.instagram.com/reel/DKMvg8NyQk1/" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 8.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
             <h4>Promosi Pendafatarn Santri Baru</h4>
@@ -584,28 +630,28 @@
       <div class="grid-short">
         <a href="https://youtube.com/shorts/SvOg29Dh-yA?feature=share" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 10.png'); background-size:cover; background-position:center;"></div>
-          <div class="card-body"> 
-            <h4>EMU WAR</h4>
+          <div class="card-body">
+             <h4>EMU WAR</h4>
             <div class="meta">HISTORY · 0:45</div>
           </div>
         </a>
-        <a href="https://youtube.com/shorts/0kSOWNc5ITo?feature=share" class="card-short">
+        <a href="https://youtube.com/shorts/0kSOWNc5ITo?feature=share" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 11.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
-            <h4>Most people don’t realize your brain is about to get completely wrecked by these 10 facts</h4>
+            <h4>Most people don't realize your brain is about to get completely wrecked by these 10 facts</h4>
             <div class="meta">HISTORY · 0:30</div>
           </div>
         </a>
-        <a href="https://youtube.com/shorts/c1LLPyxCTpw?feature=share" class="card-short">
+        <a href="https://youtube.com/shorts/c1LLPyxCTpw?feature=share" target="_blank" rel="noopener" class="card-short">
           <div class="thumb-short" style="background-image:url('proyek 12.png'); background-size:cover; background-position:center;"></div>
           <div class="card-body">
-            <h4>Did you know one of the most shocking “health hacks” in history</h4>
+            <h4>Did you know one of the most shocking "health hacks" in history</h4>
             <div class="meta">LifeStyle · 1:00</div>
           </div>
         </a>
       </div>
       <div class="see-more">
-        <a href="www.youtube.com/@TheForgottenTruth-w5n" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di YouTube →</a>
+        <a href="https://www.youtube.com/@TheForgottenTruth-w5n" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di YouTube →</a>
       </div>
     </div>
   </div>
@@ -619,23 +665,23 @@
       <p>Video YouTube atau dokumenter dengan alur naratif penuh.</p>
     </div>
     <div class="grid-long">
-      <a href="https://youtu.be/pZZ9GZJ-Y08" class="card-long">
+      <a href="https://youtu.be/pZZ9GZJ-Y08" target="_blank" rel="noopener" class="card-long">
         <div class="thumb-long" style="background-image:url('proyek 13.png'); background-size:cover; background-position:center;"></div>
         <div class="card-body">
           <h4>After Movie Qurban PPM AFM 2026</h4>
-          <p>Membuat AfterMovie ini sedikit sulit karena harus mengatur kapan kita membantu qurban dan Mengedit di satu hari yang sama, karena malamnya after movie ini di tampilkan.</p>
+          <p>Membuat AfterMovie ini sedikit sulit karena harus mengatur kapan kita membantu qurban dan mengedit di satu hari yang sama, karena malamnya after movie ini ditampilkan.</p>
           <div class="meta">DOKUMENTER · 12:30</div>
         </div>
       </a>
-      <a href="https://youtu.be/rDOdSe8njzY" class="card-long">
+      <a href="https://youtu.be/rDOdSe8njzY" target="_blank" rel="noopener" class="card-long">
         <div class="thumb-long" style="background-image:url('proyek 14.png'); background-size:cover; background-position:center;"></div>
         <div class="card-body">
           <h4>After Movie ALOHA 2026</h4>
-          <p>ALOHA (AFM lOve & HArmony) acara dimana santri berlibur ke tempat wisata di kala libur kuliah. editingnya pun di paksa harus cepat karena aftermovie di tampilkan di saat acara itu juga./p>
+          <p>ALOHA (AFM lOve & HArmony) acara dimana santri berlibur ke tempat wisata di kala libur kuliah. Editingnya pun dipaksa harus cepat karena after movie ditampilkan di saat acara itu juga.</p>
           <div class="meta">DOKUMENTER · 18:45</div>
         </div>
       </a>
-      <a href="https://youtu.be/iHnAFMiuLTA" class="card-long">
+      <a href="https://youtu.be/iHnAFMiuLTA" target="_blank" rel="noopener" class="card-long">
         <div class="thumb-long" style="background-image:url('proyek 15.png'); background-size:cover; background-position:center;"></div>
         <div class="card-body">
           <h4>MAPRES PPM AFM 2024</h4>
@@ -712,14 +758,13 @@
 </a>
 
 <script>
-  // scroll progress + scrubber sync
   const progress = document.getElementById('progress');
   const scrubFill = document.getElementById('scrubFill');
   const scrubHead = document.getElementById('scrubHead');
   const scrubTime = document.getElementById('scrubTime');
   const links = document.querySelectorAll('.ch-link');
   const sections = Array.from(links).map(l => document.getElementById(l.dataset.target));
-  const totalSeconds = 405; // 6:45
+  const totalSeconds = 405;
 
   function fmt(s){
     const m = Math.floor(s/60);
