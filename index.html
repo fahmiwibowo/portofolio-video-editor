@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fahmi Putra Wibowo — Video Editor Portfolio</title>
+<title>[Nama Kamu] — Video Editor Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -221,7 +221,7 @@
 
   /* ---------- generic section heading ---------- */
   .sec-head{ margin-bottom:44px; max-width:640px; }
-  .sec-head h2{ font-size:clamp(1.6rem,3.4vw,2.2rem); font-weight:700; margin-bottom:14px; }
+  .sec-head h2{ font-size:clamp(1.6rem,3.4vw,2.2rem); font-weight:700; margin-bottom:6px; }
   .sec-head p{ color:var(--text-dim); }
 
   /* ---------- about ---------- */
@@ -260,6 +260,24 @@
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
     gap:18px;
+  }
+
+  .client-group{ margin-bottom:52px; }
+  .client-group:last-child{ margin-bottom:0; }
+  .client-name{
+    font-family:var(--mono);
+    font-size:0.95rem;
+    font-weight:700;
+    color:var(--teal);
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .client-name::before{
+    content:"";
+    width:16px; height:1px;
+    background:var(--border);
   }
   .card-short{
     background:var(--panel);
@@ -421,7 +439,7 @@
 <section class="hero" id="hero">
   <div class="wrap">
     <div class="kicker"><span class="dot"></span>SEKARANG MEREKAM · VIDEO EDITOR</div>
-    <h1>Halo, saya <span class="accent">Fahmi Putra Wibowo</span><br>saya mengedit cerita, bukan cuma klip.</h1>
+    <h1>Halo, saya <span class="accent">[Nama Kamu]</span><br>saya mengedit cerita, bukan cuma klip.</h1>
     <p class="lead">Video editor dengan pengalaman menggarap konten short-form maupun long-form — dari naskah mentah, footage berantakan, sampai jadi video yang enak ditonton dari detik pertama sampai akhir.</p>
     <div class="cta-row">
       <a href="#short" class="btn btn-primary">▶ Lihat Proyek</a>
@@ -443,9 +461,9 @@
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="n">30+</div><div class="l">PROYEK SELESAI</div></div>
-      <div class="stat"><div class="n">+- 2 TAHUN</div><div class="l">PENGALAMAN EDITING</div></div>
-      <div class="stat"><div class="n">20 JUTA+</div><div class="l">TOTAL VIEWS</div></div>
+      <div class="stat"><div class="n">[XX]+</div><div class="l">PROYEK SELESAI</div></div>
+      <div class="stat"><div class="n">[X] TAHUN</div><div class="l">PENGALAMAN EDITING</div></div>
+      <div class="stat"><div class="n">[X] JUTA+</div><div class="l">TOTAL VIEWS</div></div>
     </div>
   </div>
 </section>
@@ -456,7 +474,7 @@
       <div class="about-text">
         <div class="eyebrow">TENTANG SAYA</div>
         <h2 style="font-size:1.9rem; font-weight:700; margin-bottom:20px;">Bukan cuma potong-potong klip.</h2>
-        <p>Saya <strong>Fahmi Putra Wibowo</strong>, video editor yang fokus bikin footage berantakan jadi cerita yang enak diikuti. Mulai dari <strong>pacing</strong>, <strong>sound design</strong>, sampai <strong>color grading</strong> — saya pastikan setiap detik punya alasan untuk ada di situ.</p>
+        <p>Saya <strong>[Nama Kamu]</strong>, video editor yang fokus bikin footage berantakan jadi cerita yang enak diikuti. Mulai dari <strong>pacing</strong>, <strong>sound design</strong>, sampai <strong>color grading</strong> — saya pastikan setiap detik punya alasan untuk ada di situ.</p>
         <p>Saya sudah terbiasa kerja dengan brief singkat, revisi cepat, dan deadline ketat — baik untuk konten short-form yang harus nge-hook dalam 3 detik pertama, maupun long-form yang butuh alur cerita yang solid dari awal sampai akhir.</p>
         <p>Gaya editing saya cukup fleksibel — saya suka menyisipkan meme dan sentuhan komedi supaya konten terasa ringan dan relatable, tapi saya juga terbiasa menangani materi yang lebih serius dengan pace dan nada yang pas, tanpa kehilangan esensi ceritanya.</p>
         <div class="tools-mini">
@@ -471,7 +489,7 @@
       <div class="about-card">
         <h3>QUICK FACTS</h3>
         <ul>
-          <li><span>Lokasi</span><span>Depok, Indonesia</span></li>
+          <li><span>Lokasi</span><span>[Kota, Indonesia]</span></li>
           <li><span>Format</span><span>Short & Long-form</span></li>
           <li><span>Turnaround</span><span>[1–3 hari]</span></li>
           <li><span>Bahasa</span><span>ID / EN</span></li>
@@ -489,38 +507,78 @@
       <h2>Konten cepat, hook kuat.</h2>
       <p>Reels, TikTok, dan YouTube Shorts — dioptimalkan untuk retensi dan format vertikal.</p>
     </div>
-    <div class="grid-short">
-      <a href="https://www.tiktok.com/@mahagun__/video/7562157303500180754?is_from_webapp=1&sender_device=pc" class="card-short">
-        <div class="thumb-short" style="background-image:url('proyek1.png'); background-size:cover; background-position:center;"></div>
-        <div class="card-body">
-          <h4>Jurusan Apa Yang Outfitnya Kurang OKE?</h4>
-          <div class="meta">LifeStyle · 0:45</div>
-        </div>
-      </a>
-      <a href="#" class="card-short">
-        <div class="thumb-short"></div>
-        <div class="card-body">
-          <h4>[Judul Proyek 2]</h4>
-          <div class="meta">KOMEDI · 0:30</div>
-        </div>
-      </a>
-      <a href="#" class="card-short">
-        <div class="thumb-short"></div>
-        <div class="card-body">
-          <h4>[Judul Proyek 3]</h4>
-          <div class="meta">EDUKASI · 1:00</div>
-        </div>
-      </a>
-      <a href="#" class="card-short">
-        <div class="thumb-short"></div>
-        <div class="card-body">
-          <h4>[Judul Proyek 4]</h4>
-          <div class="meta">PROMOSI · 0:20</div>
-        </div>
-      </a>
+    <div class="client-group">
+      <h3 class="client-name">[Nama Perusahaan 1]</h3>
+      <div class="grid-short">
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 1]</h4>
+            <div class="meta">STORYTELLING · 0:45</div>
+          </div>
+        </a>
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 2]</h4>
+            <div class="meta">KOMEDI · 0:30</div>
+          </div>
+        </a>
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 3]</h4>
+            <div class="meta">EDUKASI · 1:00</div>
+          </div>
+        </a>
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 4]</h4>
+            <div class="meta">PROMOSI · 0:20</div>
+          </div>
+        </a>
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 5]</h4>
+            <div class="meta">STORYTELLING · 0:35</div>
+          </div>
+        </a>
+      </div>
+      <div class="see-more">
+        <a href="https://instagram.com/username1" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di Instagram →</a>
+      </div>
     </div>
-    <div class="see-more">
-      <a href="https://instagram.com/username" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di Instagram →</a>
+
+    <div class="client-group">
+      <h3 class="client-name">[Nama Perusahaan 2]</h3>
+      <div class="grid-short">
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 1]</h4>
+            <div class="meta">STORYTELLING · 0:40</div>
+          </div>
+        </a>
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 2]</h4>
+            <div class="meta">KOMEDI · 0:25</div>
+          </div>
+        </a>
+        <a href="#" class="card-short">
+          <div class="thumb-short"></div>
+          <div class="card-body">
+            <h4>[Judul Proyek 3]</h4>
+            <div class="meta">PROMOSI · 0:30</div>
+          </div>
+        </a>
+      </div>
+      <div class="see-more">
+        <a href="https://instagram.com/username2" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di Instagram →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -622,7 +680,7 @@
 </section>
 
 <footer>
-  © 2026 Fahmi Putra Wibowo · Dibuat untuk melamar kerja sebagai Video Editor
+  © 2026 [Nama Kamu] · Dibuat untuk melamar kerja sebagai Video Editor
 </footer>
 
 <a href="#contact" class="floating-cta">
