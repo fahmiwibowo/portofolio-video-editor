@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahmi Putra Wibowo — Video Editor Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F1113;
+    --panel: #171A1E;
+    --panel-2: #1D2126;
+    --border: #2A2E33;
+    --text: #F2F1EC;
+    --text-dim: #9CA3AF;
+    --rec: #FF4136;
+    --amber: #E8B023;
+    --teal: #2DD4BF;
+    --radius: 14px;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Manrope', sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  ::selection{ background:var(--amber); color:#0F1113; }
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- progress bar (render bar) ---------- */
+  #progress{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg, var(--rec), var(--amber));
+    z-index:999;
+    transition:width .08s linear;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:var(--amber);
+    letter-spacing:0.04em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px; height:8px; border-radius:50%;
+    background:var(--rec);
+    box-shadow:0 0 0 3px rgba(255,65,54,0.18);
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  section{
+    padding:110px 0;
+    border-bottom:1px solid var(--border);
+  }
+  section:last-of-type{ border-bottom:none; }
+
+  h1,h2,h3{ font-family:var(--mono); margin:0; letter-spacing:-0.01em; }
+
+  /* ---------- top chapter nav ---------- */
+  header.chapters{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,17,19,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .chapters-inner{
+    max-width:1080px; margin:0 auto; padding:0 24px;
+    display:flex; align-items:center; gap:4px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .chapters-inner::-webkit-scrollbar{ display:none; }
+  .chapters-inner a{
+    flex:0 0 auto;
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--text-dim);
+    text-decoration:none;
+    padding:14px 12px;
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .chapters-inner a span.tc{ color:var(--amber); margin-right:6px; }
+  .chapters-inner a:hover, .chapters-inner a.active{
+    color:var(--text);
+    border-bottom-color:var(--amber);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding-top:90px;
+    padding-bottom:80px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero .kicker{
+    font-family:var(--mono);
+    color:var(--teal);
+    font-size:0.85rem;
+    letter-spacing:0.08em;
+    margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero .kicker .dot{
+    width:8px; height:8px; background:var(--rec); border-radius:50%;
+    animation:blink 1.6s infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.25;} }
+
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.05;
+    font-weight:800;
+    margin-bottom:18px;
+  }
+  .hero h1 .accent{ color:var(--amber); }
+  .hero p.lead{
+    font-size:1.15rem;
+    color:var(--text-dim);
+    max-width:560px;
+    margin-bottom:36px;
+  }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px; }
+  .btn{
+    font-family:var(--mono);
+    font-size:0.85rem;
+    padding:14px 22px;
+    border-radius:10px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--border);
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:var(--amber);
+    color:#0F1113;
+    border-color:var(--amber);
+    font-weight:700;
+  }
+  .btn-primary:hover{ background:#f3c14b; }
+  .btn-ghost{ color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--text-dim); }
+
+  /* scrubber */
+  .scrubber{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .scrubber-top{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:0.75rem; color:var(--text-dim);
+    margin-bottom:10px;
+  }
+  .scrubber-track{
+    position:relative;
+    height:6px;
+    background:var(--panel-2);
+    border-radius:99px;
+    overflow:visible;
+  }
+  .scrubber-fill{
+    position:absolute; left:0; top:0; height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--rec), var(--amber));
+    border-radius:99px;
+  }
+  .scrubber-head{
+    position:absolute; top:50%; left:0%;
+    width:14px; height:14px;
+    background:var(--amber);
+    border:2px solid var(--bg);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 0 3px rgba(232,176,35,0.25);
+  }
+  .scrubber-marks{
+    display:flex; justify-content:space-between;
+    margin-top:10px;
+    font-family:var(--mono); font-size:0.68rem; color:var(--text-dim);
+  }
+
+  /* stats chips */
+  .stats{
+    display:flex; gap:28px; flex-wrap:wrap; margin-top:44px;
+  }
+  .stat{
+    font-family:var(--mono);
+  }
+  .stat .n{ font-size:1.6rem; font-weight:700; color:var(--teal); }
+  .stat .l{ font-size:0.75rem; color:var(--text-dim); }
+
+  /* ---------- generic section heading ---------- */
+  .sec-head{ margin-bottom:44px; max-width:640px; }
+  .sec-head h2{ font-size:clamp(1.6rem,3.4vw,2.2rem); font-weight:700; margin-bottom:14px; }
+  .sec-head p{ color:var(--text-dim); }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.4fr 1fr; gap:48px;
+    align-items:start;
+  }
+  .about-text p{ color:var(--text-dim); margin-bottom:16px; }
+  .about-text strong{ color:var(--text); }
+  .tools-mini{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;
+  }
+  .tag{
+    font-family:var(--mono); font-size:0.72rem;
+    padding:6px 12px; border:1px solid var(--border);
+    border-radius:99px; color:var(--text-dim);
+  }
+  .about-card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:26px;
+  }
+  .about-card h3{ font-size:0.9rem; color:var(--text-dim); font-weight:500; margin-bottom:16px; }
+  .about-card ul{ list-style:none; padding:0; margin:0; }
+  .about-card li{
+    display:flex; justify-content:space-between;
+    padding:10px 0; border-bottom:1px solid var(--border);
+    font-size:0.9rem;
+  }
+  .about-card li:last-child{ border-bottom:none; }
+  .about-card li span:last-child{ color:var(--amber); font-family:var(--mono); }
+
+  /* ---------- projects ---------- */
+  .grid-short{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
+    gap:18px;
+  }
+  .card-short{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    text-decoration:none;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .card-short:hover{ transform:translateY(-4px); border-color:var(--teal); }
+  .thumb-short{
+    aspect-ratio:9/16;
+    background:linear-gradient(160deg, #23262b, #14161a);
+    position:relative;
+    display:flex; align-items:flex-end;
+  }
+  .thumb-short::after{
+    content:"▶";
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    color:rgba(242,241,236,0.35);
+    font-size:1.4rem;
+  }
+  .card-body{ padding:14px 16px; }
+  .card-body h4{ font-size:0.92rem; margin:0 0 6px; font-weight:700; }
+  .card-body .meta{ font-family:var(--mono); font-size:0.68rem; color:var(--teal); }
+
+  .grid-long{ display:flex; flex-direction:column; gap:18px; }
+
+  .see-more{
+    display:flex;
+    justify-content:center;
+    margin-top:32px;
+  }
+  .card-long{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:22px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    text-decoration:none;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .card-long:hover{ transform:translateY(-3px); border-color:var(--amber); }
+  .thumb-long{
+    aspect-ratio:16/9;
+    background:linear-gradient(160deg, #23262b, #14161a);
+    position:relative;
+  }
+  .thumb-long::after{
+    content:"▶";
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    color:rgba(242,241,236,0.35);
+    font-size:1.6rem;
+  }
+  .card-long .card-body{ padding:20px 24px 20px 0; }
+  .card-long h4{ font-size:1.05rem; margin-bottom:8px; }
+  .card-long p{ color:var(--text-dim); font-size:0.9rem; margin:0 0 10px; }
+  .card-long .meta{ font-family:var(--mono); font-size:0.72rem; color:var(--amber); }
+
+  /* ---------- skills as mini timeline ---------- */
+  .skills-list{ display:flex; flex-direction:column; gap:18px; }
+  .skill-row{ display:grid; grid-template-columns:160px 1fr 60px; align-items:center; gap:16px; }
+  .skill-row .name{ font-size:0.92rem; font-weight:600; }
+  .skill-track{
+    height:10px; background:var(--panel-2); border-radius:99px; overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .skill-fill{ height:100%; background:linear-gradient(90deg, var(--teal), var(--amber)); border-radius:99px; }
+  .skill-row .pct{ font-family:var(--mono); font-size:0.75rem; color:var(--text-dim); text-align:right; }
+
+  /* ---------- contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .contact-card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+    display:flex; align-items:center; gap:16px;
+    text-decoration:none;
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .contact-card:hover{ transform:translateY(-3px); border-color:var(--teal); }
+  .contact-card .icon{
+    width:44px; height:44px; border-radius:10px;
+    background:var(--panel-2);
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .contact-card .icon svg{ width:20px; height:20px; fill:var(--amber); }
+  .contact-card .label{ font-size:0.72rem; color:var(--text-dim); font-family:var(--mono); }
+  .contact-card .value{ font-weight:700; font-size:0.98rem; }
+
+  footer{
+    padding:36px 0;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--text-dim);
+  }
+
+  /* ---------- floating contact button ---------- */
+  .floating-cta{
+    position:fixed;
+    bottom:22px; right:22px;
+    z-index:200;
+    background:var(--amber);
+    color:#0F1113;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:0.85rem;
+    padding:14px 20px;
+    border-radius:99px;
+    text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);
+    transition:transform .15s ease;
+  }
+  .floating-cta:hover{ transform:translateY(-3px); }
+  .floating-cta svg{ width:16px; height:16px; fill:#0F1113; }
+
+  @media (max-width:760px){
+    .about-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .card-long{ grid-template-columns:1fr; }
+    .card-long .card-body{ padding:16px 20px 20px; }
+    section{ padding:70px 0; }
+    .skill-row{ grid-template-columns:110px 1fr 44px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header class="chapters">
+  <div class="chapters-inner" id="chapNav">
+    <a href="#hero" class="ch-link" data-target="hero"><span class="tc">0:00</span>Intro</a>
+    <a href="#about" class="ch-link" data-target="about"><span class="tc">0:45</span>Tentang</a>
+    <a href="#short" class="ch-link" data-target="short"><span class="tc">1:30</span>Proyek Short</a>
+    <a href="#long" class="ch-link" data-target="long"><span class="tc">3:15</span>Proyek Long</a>
+    <a href="#skills" class="ch-link" data-target="skills"><span class="tc">5:30</span>Tools</a>
+    <a href="#contact" class="ch-link" data-target="contact"><span class="tc">6:45</span>Kontak</a>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="kicker"><span class="dot"></span>SEKARANG MEREKAM · VIDEO EDITOR</div>
+    <h1>Halo, saya <span class="accent">Fahmi Putra Wibowo</span><br>saya mengedit cerita, bukan cuma klip.</h1>
+    <p class="lead">Video editor dengan pengalaman menggarap konten short-form maupun long-form — dari naskah mentah, footage berantakan, sampai jadi video yang enak ditonton dari detik pertama sampai akhir.</p>
+    <div class="cta-row">
+      <a href="#short" class="btn btn-primary">▶ Lihat Proyek</a>
+      <a href="#contact" class="btn btn-ghost">Hubungi Saya →</a>
+    </div>
+
+    <div class="scrubber">
+      <div class="scrubber-top">
+        <span>portfolio_final_v3.mp4</span>
+        <span id="scrubTime">00:00 / 06:45</span>
+      </div>
+      <div class="scrubber-track">
+        <div class="scrubber-fill" id="scrubFill"></div>
+        <div class="scrubber-head" id="scrubHead"></div>
+      </div>
+      <div class="scrubber-marks">
+        <span>Intro</span><span>Tentang</span><span>Short</span><span>Long</span><span>Tools</span><span>Kontak</span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">30+</div><div class="l">PROYEK SELESAI</div></div>
+      <div class="stat"><div class="n">+- 2 TAHUN</div><div class="l">PENGALAMAN EDITING</div></div>
+      <div class="stat"><div class="n">20 JUTA+</div><div class="l">TOTAL VIEWS</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="eyebrow">TENTANG SAYA</div>
+        <h2 style="font-size:1.9rem; font-weight:700; margin-bottom:20px;">Bukan cuma potong-potong klip.</h2>
+        <p>Saya <strong>Fahmi Putra Wibowo</strong>, video editor yang fokus bikin footage berantakan jadi cerita yang enak diikuti. Mulai dari <strong>pacing</strong>, <strong>sound design</strong>, sampai <strong>color grading</strong> — saya pastikan setiap detik punya alasan untuk ada di situ.</p>
+        <p>Saya sudah terbiasa kerja dengan brief singkat, revisi cepat, dan deadline ketat — baik untuk konten short-form yang harus nge-hook dalam 3 detik pertama, maupun long-form yang butuh alur cerita yang solid dari awal sampai akhir.</p>
+        <p>Gaya editing saya cukup fleksibel — saya suka menyisipkan meme dan sentuhan komedi supaya konten terasa ringan dan relatable, tapi saya juga terbiasa menangani materi yang lebih serius dengan pace dan nada yang pas, tanpa kehilangan esensi ceritanya.</p>
+        <div class="tools-mini">
+          <span class="tag">Premiere Pro</span>
+          <span class="tag">After Effects</span>
+          <span class="tag">DaVinci Resolve</span>
+          <span class="tag">CapCut</span>
+          <span class="tag">Color Grading</span>
+          <span class="tag">Motion Graphics</span>
+        </div>
+      </div>
+      <div class="about-card">
+        <h3>QUICK FACTS</h3>
+        <ul>
+          <li><span>Lokasi</span><span>Depok, Indonesia</span></li>
+          <li><span>Format</span><span>Short & Long-form</span></li>
+          <li><span>Turnaround</span><span>[1–3 hari]</span></li>
+          <li><span>Bahasa</span><span>ID / EN</span></li>
+          <li><span>Status</span><span>Terbuka untuk kerja</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="short">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">PROYEK · SHORT-FORM</div>
+      <h2>Konten cepat, hook kuat.</h2>
+      <p>Reels, TikTok, dan YouTube Shorts — dioptimalkan untuk retensi dan format vertikal.</p>
+    </div>
+    <div class="grid-short">
+      <a href="https://www.tiktok.com/@mahagun__/video/7562157303500180754?is_from_webapp=1&sender_device=pc" class="card-short">
+        <div class="thumb-short" style="background-image:url('Screenshot 2026-07-16 102858.png'); background-size:cover; background-position:center;"></div>
+        <div class="card-body">
+          <h4>Jurusan Apa Yang Outfitnya Kurang OKE?</h4>
+          <div class="meta">LifeStyle · 0:45</div>
+        </div>
+      </a>
+      <a href="#" class="card-short">
+        <div class="thumb-short"></div>
+        <div class="card-body">
+          <h4>[Judul Proyek 2]</h4>
+          <div class="meta">KOMEDI · 0:30</div>
+        </div>
+      </a>
+      <a href="#" class="card-short">
+        <div class="thumb-short"></div>
+        <div class="card-body">
+          <h4>[Judul Proyek 3]</h4>
+          <div class="meta">EDUKASI · 1:00</div>
+        </div>
+      </a>
+      <a href="#" class="card-short">
+        <div class="thumb-short"></div>
+        <div class="card-body">
+          <h4>[Judul Proyek 4]</h4>
+          <div class="meta">PROMOSI · 0:20</div>
+        </div>
+      </a>
+    </div>
+    <div class="see-more">
+      <a href="https://instagram.com/username" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<section id="long">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">PROYEK · LONG-FORM</div>
+      <h2>Cerita yang butuh ruang untuk berkembang.</h2>
+      <p>Video YouTube, dokumenter, atau konten edukasi dengan alur naratif penuh.</p>
+    </div>
+    <div class="grid-long">
+      <a href="#" class="card-long">
+        <div class="thumb-long"></div>
+        <div class="card-body">
+          <h4>[Judul Proyek Long-Form 1]</h4>
+          <p>[Deskripsi singkat 1 kalimat: apa proyek ini, tantangan editingnya apa.]</p>
+          <div class="meta">DOKUMENTER · 12:30</div>
+        </div>
+      </a>
+      <a href="#" class="card-long">
+        <div class="thumb-long"></div>
+        <div class="card-body">
+          <h4>[Judul Proyek Long-Form 2]</h4>
+          <p>[Deskripsi singkat 1 kalimat tentang proyek ini.]</p>
+          <div class="meta">EDUKASI · 18:45</div>
+        </div>
+      </a>
+      <a href="#" class="card-long">
+        <div class="thumb-long"></div>
+        <div class="card-body">
+          <h4>[Judul Proyek Long-Form 3]</h4>
+          <p>[Deskripsi singkat 1 kalimat tentang proyek ini.]</p>
+          <div class="meta">VLOG · 9:10</div>
+        </div>
+      </a>
+    </div>
+    <div class="see-more">
+      <a href="https://youtube.com/@username" target="_blank" rel="noopener" class="btn btn-ghost">Lihat Selengkapnya di YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">TOOLS & KEAHLIAN</div>
+      <h2>Software yang saya kuasai setiap hari.</h2>
+    </div>
+    <div class="skills-list">
+      <div class="skill-row"><div class="name">Adobe Premiere Pro</div><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div><div class="pct">95%</div></div>
+      <div class="skill-row"><div class="name">After Effects</div><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div><div class="pct">80%</div></div>
+      <div class="skill-row"><div class="name">DaVinci Resolve</div><div class="skill-track"><div class="skill-fill" style="width:75%"></div></div><div class="pct">75%</div></div>
+      <div class="skill-row"><div class="name">CapCut</div><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div><div class="pct">90%</div></div>
+      <div class="skill-row"><div class="name">Sound Design</div><div class="skill-track"><div class="skill-fill" style="width:70%"></div></div><div class="pct">70%</div></div>
+    </div>
+    <p style="margin-top:20px; color:var(--text-dim); font-size:0.85rem;">*Sesuaikan persentase & daftar tools dengan kemampuan asli kamu.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">KONTAK</div>
+      <h2>Ada proyek? Yuk ngobrol.</h2>
+      <p>Saya terbuka untuk kerja lepas maupun full-time. Hubungi lewat channel mana pun yang paling nyaman.</p>
+    </div>
+    <div class="contact-grid">
+      <a href="https://wa.me/62XXXXXXXXXX" class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.14c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.3-1.64-.6-2.9-1.25-4.79-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.43.5-.14.13-.29.28-.13.56.16.28.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.25 1.39.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.31z"/></svg></div>
+        <div>
+          <div class="label">WHATSAPP</div>
+          <div class="value">[+62 8xx-xxxx-xxxx]</div>
+        </div>
+      </a>
+      <a href="mailto:kamu@email.com" class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg></div>
+        <div>
+          <div class="label">EMAIL</div>
+          <div class="value">[kamu@email.com]</div>
+        </div>
+      </a>
+      <a href="https://instagram.com/username" class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.05.01 4.12.06 1.07.05 1.8.22 2.44.47.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.25.64.42 1.37.47 2.44.05 1.07.06 1.42.06 4.12s-.01 3.05-.06 4.12c-.05 1.07-.22 1.8-.47 2.44a4.93 4.93 0 0 1-1.15 1.77 4.93 4.93 0 0 1-1.77 1.15c-.64.25-1.37.42-2.44.47-1.07.05-1.42.06-4.12.06s-3.05-.01-4.12-.06c-1.07-.05-1.8-.22-2.44-.47a4.93 4.93 0 0 1-1.77-1.15 4.93 4.93 0 0 1-1.15-1.77c-.25-.64-.42-1.37-.47-2.44C2.01 15.05 2 14.7 2 12s.01-3.05.06-4.12c.05-1.07.22-1.8.47-2.44.26-.66.6-1.22 1.15-1.77A4.93 4.93 0 0 1 5.45.52c.64-.25 1.37-.42 2.44-.47C8.95.01 9.3 0 12 0zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.25a3.25 3.25 0 1 1 0-6.5 3.25 3.25 0 0 1 0 6.5zM17.4 4.6a1.17 1.17 0 1 1-2.34 0 1.17 1.17 0 0 1 2.34 0z"/></svg></div>
+        <div>
+          <div class="label">INSTAGRAM</div>
+          <div class="value">[@username]</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/username" class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></div>
+        <div>
+          <div class="label">LINKEDIN</div>
+          <div class="value">[/in/username]</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Fahmi Putra Wibowo · Dibuat untuk melamar kerja sebagai Video Editor
+</footer>
+
+<a href="#contact" class="floating-cta">
+  <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2z"/></svg>
+  Hubungi Saya
+</a>
+
+<script>
+  // scroll progress + scrubber sync
+  const progress = document.getElementById('progress');
+  const scrubFill = document.getElementById('scrubFill');
+  const scrubHead = document.getElementById('scrubHead');
+  const scrubTime = document.getElementById('scrubTime');
+  const links = document.querySelectorAll('.ch-link');
+  const sections = Array.from(links).map(l => document.getElementById(l.dataset.target));
+  const totalSeconds = 405; // 6:45
+
+  function fmt(s){
+    const m = Math.floor(s/60);
+    const sec = Math.floor(s%60);
+    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+
+  function onScroll(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progress.style.width = pct + '%';
+    scrubFill.style.width = pct + '%';
+    scrubHead.style.left = pct + '%';
+    scrubTime.textContent = fmt((pct/100) * totalSeconds) + ' / 06:45';
+
+    let current = sections[0];
+    for (const sec of sections){
+      if (sec && sec.getBoundingClientRect().top <= 140) current = sec;
+    }
+    links.forEach(l => l.classList.toggle('active', current && l.dataset.target === current.id));
+  }
+
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
+
+</body>
+</html>
